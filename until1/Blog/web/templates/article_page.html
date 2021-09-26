@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="../static/bootstrap.min.css">
+    <script src="../static/jquery-3.2.1.min.js"></script>
+    <script src="../static/bootstrap.min.js"></script>
+    <style>
+        a:hover{
+            text-decoration: none;
+        }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+        body{
+            background-color: #d2e9fb;
+            margin: 0;
+        }
+        .navbar{
+            border-radius: 0;
+        }
+        .navbar-inverse .navbar-nav>li>a:hover {
+            color:#5bc0de;
+        }
+        .navbar-inverse .navbar-brand:hover{
+            color: #5bc0de;
+        }
+        .navbar-inverse {
+            background-color: white;
+            box-shadow: #cdd5dc 0 0 10px;
+            border: none;
+        }
+        .navbar-inverse .navbar-toggle .icon-bar {
+            background-color: #5bc0de;
+        }
+        .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+            border-color: #cdd5dc;
+        }
+        .article_body{
+            padding: 20px;
+        }
+        .blog{
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .prime{
+            background-color: white;
+            margin: 0 10px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: #cdd5dc 0px 0px 10px;
+        }
+        ul li{
+            list-style-type:none;
+            margin-bottom: 5px;
+        }
+        ul li a,ul li a:hover{
+            color: black;
+            font-size: 16px;
+            text-decoration: none;
+        }
+        ul{
+            margin-left: -30px;
+        }
+        .right_bar{
+            position: fixed;
+            padding: 10px 10px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: #cdd5dc 0px 0px 10px;
+        }
+        .tags a{
+            text-decoration: none;
+            font-size: 16px;
+            color: #474747;
+            margin: 0 5px;
+        }
+        .fa-angle-right{
+            margin-left: 5px;
+            font-size: 17px;
+        }
+        .fa-angle-left{
+            margin-right: 5px;
+            font-size: 17px;
+        }
+        .post-nav{
+            text-align: center;
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+        }
+        .post-nav-item{
+            margin-top: 15px;
+        }
+        .post-nav-item a{
+            font-size: 17px;
+        }
+        .content-wrap-comment{
+            padding: 20px;
+            margin: 25px 10px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow:#cdd5dc 0px 0px 10px;
+        }
+        .nav-page{
+            display: flex;
+            justify-content: space-between;
+        }
+
+
+
+    </style>
+</head>
+<body style="background-color: #f3f3f3">
+    {%csrf_token%}
+    <div  style="background-color: white;">
+        <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/index/">Sangni_IO</a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/index/">首页</a></li>
+                    <li><a href="#">留言板</a></li>
+                    <li><a href="#">关于</a></li>
+                </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container blog">
+        <div class="row">
+
+            <div class="prime col-sm-12 col-md-12 col-lg-10">
+
+                <div style="text-align: center;"><h1>{{article.title}}</h1></div>
+                <div class="article_body" id="yzq-blog-content">{{article.body|safe}}</div>
+                <div class="post-nav">
+                    <div class="post-nav-center post-nav-item" style="width: auto">
+                        <span><i class="fa fa-tags"></i></span>
+                        {% for tag in article.tags.all %}
+                        <a>{{tag}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="post-nav-item nav-page">
+                    <div class="post-nav-next post-nav-item">
+                    {% if has_next %}
+                        <a href="/article/{{ blog_next.id }}" rel="next" title="{{ blog_next.title }}">
+                        <i class="fa fas fa-angle-left"></i>{{ blog_next.title }}
+                        </a>
+                    {% endif %}
+                    </div>
+                    <div class="post-nav-prev post-nav-item">
+                        {% if has_prev %}
+                        <a href="/article/{{blog_prev.id}}" rel="prev" title="{{ blog_prev.title }}">
+                            {{ blog_prev.title }}<i class="fa fas fa-angle-right"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+<!--                <div class="right_bar col-md-2 col-lg-2"> </div>-->
+            </div>
+            <div class="content-wrap-comment">
+                <div id="comment"></div>
+                <h2 class="comment-add">发表评论</h2>
+
+                <form class="comment-form" id="jsStayForm">
+
+                    <div class="form-group">
+                        <label class="name">名字:  </label>
+                        <input name="user" type="text" class="form-name" id="js-name" placeholder="不超过20个字">
+
+                    </div>
+                    <div class="form-group">
+                        <label class="comment">评论:</label>
+                        <textarea name="content" class="form-control" id="js-content" rows="5" placeholder="不超过300个字"></textarea>
+
+                    </div>
+                    <input name="blog" type="hidden" id="js-name" value="{{ blog.id }}">
+                    <p class="error company-tips" id="jsCompanyTips"></p>
+
+                    <button class="btn" type="button" id="jsStayBtn" value="发表">发表</button>
+                </form>
+
+                <div class="#">
+                    <h3 class="comment-list-title">共 <span>{{ comment_nums }}</span> 条评论</h3>
+                    <ul class="comment-list">
+
+                        {% for comment in all_comment %}
+                        <li class="comment-item">
+                            <hr class="the-line"  />
+                            <span class="nickname">{{ comment.name }} - </span>
+                            <time class="submit-date"
+                                  datetime="{{ comment.create_time }}">{{ comment.create_time|date:"Y/m/d   h:m" }}</time>
+                            <p class="floor">{{ forloop.counter }} #  </p>
+                            <div style="word-wrap: break-word">
+                                {{ comment.content }}
+                            </div>
+
+                        </li>
+                        {% empty %}
+                        暂无评论
+                        {% endfor %}
+
+                    </ul>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</body>
+<script>
+    $(function(){
+        $('#jsStayBtn').on('click', function(){
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url:"/add_comment/",
+                data:$('#jsStayForm').serialize(),
+                dateType:"json",
+                async: true,
+                beforeSend:function(xhr, settings){
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function(data) {
+                    if(data.status == 'success'){
+                        alert("提交成功");
+                        window.location.reload();//刷新当前页面.
+                    }else if(data.status == 'fail'){
+
+                        alert("评论错误，请重新评论");
+                    }
+                },
+            });
+        });
+    })
+
+</script>
+<script language="javascript" type="text/javascript">
+    //生成一级目录索引列表
+    function GenerateContentList() {
+        var jquery_h3_list = $('#yzq-blog-content h3');// 这里的 h2, 换成内容页面对应的标题号数 (h1 h2 h3)
+        if (jquery_h3_list.length > 0) {
+            var content = '<a name="_labelTop"></a>';
+            content += '<div id="navCategory">';
+            content += '<p style="font-size:18px"><b>阅读目录</b></p>';
+            content += '<ul>';
+            for (var i = 0; i < jquery_h3_list.length; i++) {
+                var go_to_top = '<div style="" class="return-list"><a href="#top"></a><a name="_label' + i + '"></a></div>';
+                $(jquery_h3_list[i]).before(go_to_top);
+                var li_content = '<li><a href="#_label' + i + '">' + $(jquery_h3_list[i]).text() + '</a></li>';
+                content += li_content;
+            }
+            content += '</ul>';
+            content += '</div>';
+            if ($('#yzq-blog-content').length != 0) {
+                $($('.right_bar')[0]).prepend(content);
+            }
+        }
+    }
+
+    GenerateContentList();
+
+    $("h3").click(function (event) {
+        if (event.target === this) {
+            // 点击 h2 标题，回到顶部，时间是回去的动画时长
+            $("html,body").animate({scrollTop: 0}, 400);
+        }
+    });
+
+    let winWidth;
+    window.onresize = function(){
+        winWidth = window.innerWidth;
+        if (winWidth<999){
+            document.querySelector('.sidebar').style.display='none'
+            document.querySelector('.row').style.justifyContent='center'
+
+        }
+        else {
+            document.querySelector('.sidebar').style.display='block'
+            document.querySelector('.row').style.justifyContent='end'
+        }
+    }
+</script>
+</html>
