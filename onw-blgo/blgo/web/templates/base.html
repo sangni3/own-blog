@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> {% block title %}sangni的博客{% endblock %} </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="../static/bootstrap.min.css">
+    <script src="../static/jquery-3.2.1.min.js"></script>
+    <script src="../static/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/main.css">
+    <link rel="shortcut icon" href="../../media/icon.jpg">
+    {% block script %}
+
+    {% endblock %}
+</head>
+<body>
+{%csrf_token%}
+<div>
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/index/">Sangni_IO</a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/index/">首页</a></li>
+                    <li><a href="/archive/">归档</a></li>
+                    <li><a href="#">留言板</a></li>
+                    <li class="item-search">
+                        <form action="{% url 'search' %}" class="search-form" method="get">
+                            {% csrf_token %}
+                            <div class="fgroup">
+                                <input class="search" type="search" placeholder="What are you looking for?" name="q">
+<!--                                <i class="fa fa-search"></i>-->
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="banner_container">
+    <span class="banner_title">Hi,sangni</span>
+    <span class="banner_title1">「story never end」</span>
+</div>
+<div id="main">
+    {% block content %}
+
+    {% endblock %}
+    <div id="rightbar" class="fixed-top">
+        <div class="my-info">
+        <div id="avatar"><img  class='img' src="/media/{{avatar}}" alt=""></div>
+        <div class="name"><a>sangni_IO</a></div>
+        <div>
+            <nav class="site-state">
+                <div class="site-state-item site-state-posts">
+                    <a style="cursor: default;">
+                        <span class="site-state-item-count">{{blog_nums}}</span>
+                        <span class="site-state-item-name">文章</span>
+                    </a>
+                </div>
+                <div class="site-state-item site-state-categories">
+                    <a data-toggle="modal" data-target="#blog_categories">
+                        <span class="site-state-item-count">{{cate_nums}}</span>
+                        <span class="site-state-item-name">分类</span>
+                    </a>
+                </div>
+                <div class="site-state-item site-state-tags">
+                    <a data-toggle="modal" data-target="#blog_tags">
+                        <span class="site-state-item-count">{{tag_nums}}</span>
+                        <span class="site-state-item-name">标签</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <div class="links-of-author motion-element">
+                <span class="links-of-author-item scaleup">
+                    <a href="https://github.com/sangni3" target="_blank" title="github">
+                        <i class="fa fa-github">
+                            <span>github</span>
+                        </i>
+                    </a>
+                </span>
+            <span class="links-of-author-item scaleup">
+                    <a href="https://space.bilibili.com/7867047" target="_blank" title="bilibili">
+                        <i style="fill:#20b0e3;">
+                            <svg t="1581180571735" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1122">
+                            <path d="M813.2864 234.5216h-53.0176l46.3872-46.3872c19.8912-19.8912 19.8912-59.648 0-79.5136s-59.648-19.8912-79.5136 0l-132.5312 125.9008h-159.0272l-132.5312-125.9008c-19.8912-19.8912-59.648-19.8912-79.5136 0s-19.8912 59.648 0 79.5136l46.3872 46.3872H216.9088c-92.7744 0-165.6576 72.8832-165.6576 165.6576v357.8112c0 99.4048 72.8832 172.288 165.6576 172.288h589.7216c92.7744 0 165.6576-72.8832 165.6576-165.6576V400.1792c6.6304-92.7744-66.2528-165.6576-159.0272-165.6576z m46.3872 523.4688a59.392 59.392 0 0 1-59.648 59.648H223.5392a59.392 59.392 0 0 1-59.648-59.648V406.8096a59.392 59.392 0 0 1 59.648-59.648h576.4864a59.392 59.392 0 0 1 59.648 59.648v351.1808z m-516.864-291.5328a59.392 59.392 0 0 0-59.648 59.648v59.648c0 33.1264 26.496 59.648 59.648 59.648s59.648-26.496 59.648-59.648v-59.648a59.392 59.392 0 0 0-59.648-59.648z m344.576 0a59.392 59.392 0 0 0-59.648 59.648v59.648c0 33.1264 26.496 59.648 59.648 59.648s59.648-26.496 59.648-59.648v-59.648a59.392 59.392 0 0 0-59.648-59.648z" p-id="1123"></path></svg>
+                            <span>bilibili</span>
+                        </i>
+                    </a>
+                </span>
+            <span class="links-of-author-item scaleup">
+                    <a href="mailto:dujuntaolove@outlook.com" target="_blank" title="email">
+                        <i class="fa fa-envelope-o">
+                            <span>email</span>
+                        </i>
+                    </a>
+                </span>
+        </div>
+        </div>
+        <div class="categorys">
+            <h3>栏目分类</h3>
+            <ul>
+                {% for category in all_category %}
+                <li >
+                    <a href="/type/{{category.id}}">{{category.name}}
+                        <span>{{category.number}}</span>
+                    </a>
+
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<script id="ribbon" src="../static/canvas-ribbon.js"></script>
+</body>
+</html>
