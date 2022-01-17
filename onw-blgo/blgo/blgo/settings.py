@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-&o1l3jd6c6-7g_f#608cn2+qo7$2!_-o^b2yhx1b^&r5e23@_0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,13 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     'web',
+    'sitemap',
     'ckeditor',
     'ckeditor_uploader',
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')     #设置静态文件路径为主目录下的media文件夹
 MEDIA_URL = '/media/'
+SIMPLEUI_HOME_INFO = False
 
 CKEDITOR_UPLOAD_PATH ='upload/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'

@@ -281,13 +281,14 @@ a:hover{
     margin-top: 20px;
     background-color: white;
     text-align: center;
-    padding: 10px;
     border-radius: 5px;
     box-shadow: #cdd5dc 0 0 10px;
 }
 .foot ul{
     list-style: none;
-    display: flex
+    display: flex;
+    padding-left: 0;
+
 }
 .foot ul li{
     margin: 0 10px;
@@ -308,7 +309,9 @@ a:hover{
     background: #97dffd;
     color: white;
 }
-
+.pageturn{
+    margin-top: 10px;
+}
 .posts-collapse .post-collapse-title {
     color: #444;
     font-size: 25px;
@@ -396,4 +399,34 @@ a:hover{
     width:4px;
     background:rgba(151,223,253,.1);
     z-index:-1
+}
+
+.fixed-btn {
+    position: fixed;
+    right: 1%;
+    bottom: 5%;
+    width: 40px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: white;
+    font-size: 24px;
+    z-index: 1040;
+    -webkit-backface-visibility: hidden;
+}
+.fixed-btn a{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+footer{
+    margin-top: 50px;
+}
+.footer-inner{
+    margin-left: 50%;
+    position: relative;
+    left: -25%;
+}
+.footer-inner a{
+    color: black;
 }

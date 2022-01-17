@@ -31,13 +31,13 @@ sangni的博客
                         <span class="cate">
                             <i class="fa fa-file-o"></i>
                         </span>
-                        <span>{{article.category}}</span>
+                        <span>{{top.category}}</span>
                     </span>
                 </div>
             </div>
-            <div style="margin-top: 10px"> {{top.body|striptags|truncatechars:200}} </div>
+            <div style="margin-top: 30px"> {{top.body|safe|truncatechars:200}} </div>
             <div class="post-button">
-                <a class="btn scaleup" href="/article/{{article.id}}" rel="contents">阅读全文 »</a>
+                <a class="btn scaleup" href="/article/{{top.id}}" rel="contents">阅读全文 »</a>
             </div>
         </div>
         {% endfor%}
@@ -70,7 +70,7 @@ sangni的博客
                     </span>
                 </div>
             </div>
-            <div style="margin-top: 10px"> {{article.body|striptags|truncatechars:200}} </div>
+            <div style="margin-top: 10px"> {{article.body|safe|truncatechars:200}} </div>
             <div class="post-button">
                 <a class="btn scaleup" href="/article/{{article.id}}" rel="contents">阅读全文 »</a>
             </div>

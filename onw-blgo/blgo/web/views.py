@@ -30,7 +30,7 @@ def Blog(request):
     except PageNotAnInteger:
         page = 1
 
-    p = Paginator(articles, 2, request=request)
+    p = Paginator(articles, 3, request=request)
     articles = p.page(page)
 
     return render(request, 'index.html', {
@@ -47,10 +47,13 @@ def Blog(request):
 #文章内容
 def article(request, article_id):
     contents1 = models.Article.objects.get(pk=article_id)
+    all_category = models.Category.objects.all().order_by( 'id' )
     user=models.User.objects.first()
-    # 博客点击数+1, 评论数统计
-    contents1.views += 1
-    contents1.save()
+    count_nums = models.Counts.objects.first()
+    blog_nums = count_nums.blog_nums
+    cate_nums = count_nums.category_nums
+    tag_nums = count_nums.tag_nums
+
     # 获取评论内容
     comments = ArticleComment.objects.filter(blog=contents1,parent=None)
     # 实现博客上一篇与下一篇功能
@@ -74,6 +77,7 @@ def article(request, article_id):
             has_next = True
 
     return render(request, 'article_page.html', {
+        'all_category': all_category,
         'article': contents1,
         'avatar': user.avatar,
         'comments':comments.order_by('-create_time'),
@@ -82,12 +86,16 @@ def article(request, article_id):
         'blog_next': blog_next,
         'has_prev': has_prev,
         'has_next': has_next,
+        'blog_nums': blog_nums,
+        'cate_nums': cate_nums,
+        'tag_nums': tag_nums
     })
 
 
 #分类显示
 def blogs_with_type(request, cate_id):
     cate = models.Category.objects.get(pk=cate_id)
+    user = models.User.objects.first()
     articles = models.Article.objects.filter(category=cate)
     count_nums = models.Counts.objects.first()
     blog_nums = count_nums.blog_nums
@@ -104,6 +112,7 @@ def blogs_with_type(request, cate_id):
     articles = p.page(page)
     return render(request, 'index.html', {
         'all_category': all_category,
+        'avatar': user.avatar,
         'articles': articles,
         'blog_nums': blog_nums,
         'cate_nums': cate_nums,
@@ -135,6 +144,7 @@ class ArichiveView(View):
         all_blog = p.page(page)
 
         return render(request, 'archive.html', {
+            'avatar': user.avatar,
             'all_blog': all_blog,
             'all_category': all_category,
             'blog_nums': blog_nums,
@@ -167,8 +177,10 @@ def register(request):
             username = reg_form.cleaned_data['username']
             email = reg_form.cleaned_data['email']
             password = reg_form.cleaned_data['password']
+            avatar = request.FILES.get("avatar")  # 图片对象
+            print(avatar)
             # 创建用户
-            user = User.objects.create_user(username, email, password)
+            user = User.objects.create_user(username, email, password, avatar=avatar)
             user.save()
             # 登录用户
             user = auth.authenticate(username=username, password=password)

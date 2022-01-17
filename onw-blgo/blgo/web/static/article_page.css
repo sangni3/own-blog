@@ -1,16 +1,13 @@
 
 ul li{
     list-style-type:none;
-    margin-bottom: 5px;
 }
-ul li a,ul li a:hover{
+nav li a,nav li a:hover{
     color: black;
     font-size: 16px;
     text-decoration: none;
 }
-ul{
-    margin-left: -30px;
-}
+
 .right_bar{
     position: fixed;
     padding: 10px 10px;

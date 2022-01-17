@@ -4,6 +4,10 @@ from .models import Article, User, Category, Tag, ArticleComment, Counts
 
 # Register your models here.
 
+admin.AdminSite.site_header='博客管理系统'
+
+admin.AdminSite.site_title = '博客管理系统'
+
 class PostAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'created_time']
     search_fields = ['title']  # 搜索框

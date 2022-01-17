@@ -91,6 +91,11 @@ class Article(models.Model):
         self.views += 1
         self.save(update_fields=['views'])
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+
+        return reverse('article', args=(self.id,))
+
     # 下一篇
     def next_article(self):  # id比当前id大，状态为已发布，发布时间不为空
         return Article.objects.filter(id__gt=self.id, status='p', pub_time__isnull=False).first()
