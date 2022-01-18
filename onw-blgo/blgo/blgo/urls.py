@@ -22,6 +22,8 @@ from web.views import ArichiveView
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from sitemap.BlogSitemap import BlogSitemap
+from django.views.static import serve
+from .settings import MEDIA_ROOT, STATIC_ROOT
 
 blog_sitemap={
     'recipe':BlogSitemap
@@ -41,5 +43,7 @@ urlpatterns = [
     path( 'search/', views.search, name='search' ),
     url( r'^blog_sitemap\.xml$', sitemap, {'sitemaps': blog_sitemap},
          name='django.contrib.sitemaps.views.sitemap' ),
+    url(r'media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
