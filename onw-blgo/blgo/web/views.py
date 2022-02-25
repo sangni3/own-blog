@@ -50,6 +50,7 @@ def article(request, article_id):
     all_category = models.Category.objects.all().order_by( 'id' )
     user=models.User.objects.first()
     count_nums = models.Counts.objects.first()
+    models.Article.viewed(contents1)
     blog_nums = count_nums.blog_nums
     cate_nums = count_nums.category_nums
     tag_nums = count_nums.tag_nums
@@ -116,7 +117,8 @@ def blogs_with_type(request, cate_id):
         'articles': articles,
         'blog_nums': blog_nums,
         'cate_nums': cate_nums,
-        'tag_nums': tag_nums
+        'tag_nums': tag_nums,
+        'cate':1
     })
 
 
@@ -178,9 +180,11 @@ def register(request):
             email = reg_form.cleaned_data['email']
             password = reg_form.cleaned_data['password']
             avatar = request.FILES.get("avatar")  # 图片对象
-            print(avatar)
-            # 创建用户
-            user = User.objects.create_user(username, email, password, avatar=avatar)
+            if avatar == None:
+                # 创建用户
+                user = User.objects.create_user(username, email, password)
+            else:
+                user = User.objects.create_user( username, email, password, avatar=avatar )
             user.save()
             # 登录用户
             user = auth.authenticate(username=username, password=password)

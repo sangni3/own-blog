@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title> {% block title %}sangni的博客{% endblock %} </title>
-    {% load static %}
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
-    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
-    <script src="{% static 'jquery-3.2.1.min.js' %}"></script>
-    <script src="{% static 'bootstrap.min.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <link rel="stylesheet" href="../static/bootstrap.min.css">
+    <script src="../static/jquery-3.2.1.min.js"></script>
+    <script src="../static/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/main.css">
     <link rel="shortcut icon" href="../../media/icon.jpg">
     {% block script %}
 
@@ -60,6 +59,7 @@
     {% block content %}
 
     {% endblock %}
+    <!--侧边栏-->
     <div id="rightbar" class="fixed-top">
         <div class="my-info">
         <div id="avatar"><img  class='img' src="/media/{{avatar}}" alt=""></div>
@@ -161,26 +161,83 @@
             </div>
         </div>
     </div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
-    <div>
-        <meting-js
-                server="netease"
-                type="playlist"
-                id="7236267143"
-                fixed="true"
-                autoplay="false"
-                loop="all"
-                order="random"
-                preload="auto"
-                list-folded="ture"
-                list-max-height="500px"
-                lrc-type="0">
-        </meting-js>
-    </div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/meting@1.2.0/dist/Meting.min.js"></script>
+    <div id="my-aplayer"
+
+         class="aplayer"
+
+         data-id="7236267143"
+
+         data-server="netease"
+
+         data-type="playlist"
+
+         data-fixed="true"
+
+         data-autoplay="false"
+
+         data-order="list"
+
+         data-volume="0.55"
+
+         data-theme="#cc543a"
+
+         data-preload="auto"
+
+    ></div>
 </footer>
 </body>
+<script>
+    $(function(){
 
+        setTimeout(function () {
+            var cl=true
+            $('.aplayer-miniswitcher').click(
+                function (){
+                    if (cl){
+                        $(".aplayer-body").unbind();
+                        cl=false
+                    }
+                    else {
+                        cl=true
+                        $('.aplayer-body').css({left:'-66px'})
+                        $('.aplayer-body').mouseover(
+                            function(){$('.aplayer-body').css({left:'0'})}
+                        );
+                        $('.aplayer-body').mouseout(
+                            function(){$('.aplayer-body').css({left:'-66px'})}
+                        );
+                    }
+                }
+            )
+
+            $('.aplayer-body').css({left:'-66px'})
+            $('.aplayer-body').mouseover(
+                function(){$('.aplayer-body').css({left:'0'})}
+            );
+            $('.aplayer-body').mouseout(
+                function(){$('.aplayer-body').css({left:'-66px'})}
+            );
+
+        }, 2000);
+        $(window).scroll( function() {
+            var winScrollHeight = $(window).scrollTop(); // 获取滚动条滚动的距离(移动距离)
+            if (winScrollHeight> 50){
+                $('.fixed-btn').css('display','inline-block')
+            }
+            else {
+                $('.fixed-btn').css('display','none')
+            }
+        })
+
+    })
+
+
+
+</script>
 
 </html>
